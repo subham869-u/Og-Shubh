@@ -1,4 +1,6 @@
 import React, { useEffect, useRef, useState, useCallback } from 'react';
+import { CustomCursor } from './components/CustomCursor';
+import { Magnetic } from './components/MagneticElement';
 
 // Custom typewriter hook according to specification:
 // text, speed (default 38ms), startDelay (default 600ms)
@@ -293,6 +295,9 @@ export default function App() {
 
   return (
     <div className="relative w-screen min-h-screen bg-black text-white select-none overflow-hidden touch-pan-y">
+      {/* Framer Motion Custom Circular Magnetic Cursor */}
+      <CustomCursor />
+
       {/* BACKGROUND VIDEO (mouse-scrub controlled & mobile optimized) */}
       <video
         ref={videoRef}
@@ -332,73 +337,89 @@ export default function App() {
       {/* NAVBAR (fixed, z-index: 10) */}
       <header className="fixed top-0 left-0 right-0 z-10 w-full px-5 sm:px-8 py-4 sm:py-5 flex row justify-between items-center">
         {/* Logo (left) */}
-        <div className="flex row items-center gap-3">
-          <span
-            className="text-[21px] sm:text-[26px] tracking-tight text-white select-none"
-            style={{ fontFamily: 'var(--font-heading)' }}
+        <Magnetic strength={0.25}>
+          <div
+            className="flex row items-center gap-3 cursor-pointer py-1 px-1"
+            data-magnetic="true"
+            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
           >
-            OgShubh&reg;
-          </span>
-          <span
-            className="text-[25px] sm:text-[30px] text-white select-none leading-none"
-            style={{ letterSpacing: '-0.02em' }}
-            aria-hidden="true"
-          >
-            ✳︎
-          </span>
-        </div>
+            <span
+              className="text-[21px] sm:text-[26px] tracking-tight text-white select-none"
+              style={{ fontFamily: 'var(--font-heading)' }}
+            >
+              OgShubh&reg;
+            </span>
+            <span
+              className="text-[25px] sm:text-[30px] text-white select-none leading-none"
+              style={{ letterSpacing: '-0.02em' }}
+              aria-hidden="true"
+            >
+              ✳︎
+            </span>
+          </div>
+        </Magnetic>
 
         {/* Desktop nav links (center, hidden below md) */}
         <nav className="hidden md:flex flex-row items-center text-[23px] text-white">
-          <button
-            type="button"
-            onClick={() => handleNavClick('Labs')}
-            className="hover:opacity-60 transition-opacity cursor-pointer bg-transparent border-0 p-0 text-inherit font-inherit"
-          >
-            Labs
-          </button>
+          <Magnetic strength={0.28}>
+            <button
+              type="button"
+              onClick={() => handleNavClick('Labs')}
+              className="hover:opacity-60 transition-opacity cursor-pointer bg-transparent border-0 p-1 text-inherit font-inherit"
+            >
+              Labs
+            </button>
+          </Magnetic>
           <span className="select-none">,&nbsp;</span>
-          <button
-            type="button"
-            onClick={() => handleNavClick('Studio')}
-            className="hover:opacity-60 transition-opacity cursor-pointer bg-transparent border-0 p-0 text-inherit font-inherit"
-          >
-            Studio
-          </button>
+          <Magnetic strength={0.28}>
+            <button
+              type="button"
+              onClick={() => handleNavClick('Studio')}
+              className="hover:opacity-60 transition-opacity cursor-pointer bg-transparent border-0 p-1 text-inherit font-inherit"
+            >
+              Studio
+            </button>
+          </Magnetic>
           <span className="select-none">,&nbsp;</span>
-          <button
-            type="button"
-            onClick={() => handleNavClick('Openings')}
-            className="hover:opacity-60 transition-opacity cursor-pointer bg-transparent border-0 p-0 text-inherit font-inherit"
-          >
-            Openings
-          </button>
+          <Magnetic strength={0.28}>
+            <button
+              type="button"
+              onClick={() => handleNavClick('Openings')}
+              className="hover:opacity-60 transition-opacity cursor-pointer bg-transparent border-0 p-1 text-inherit font-inherit"
+            >
+              Openings
+            </button>
+          </Magnetic>
           <span className="select-none">,&nbsp;</span>
-          <button
-            type="button"
-            onClick={() => handleNavClick('Shop')}
-            className="hover:opacity-60 transition-opacity cursor-pointer bg-transparent border-0 p-0 text-inherit font-inherit"
-          >
-            Shop
-          </button>
+          <Magnetic strength={0.28}>
+            <button
+              type="button"
+              onClick={() => handleNavClick('Shop')}
+              className="hover:opacity-60 transition-opacity cursor-pointer bg-transparent border-0 p-1 text-inherit font-inherit"
+            >
+              Shop
+            </button>
+          </Magnetic>
         </nav>
 
         {/* Desktop YouTube link (right, hidden below md) */}
-        <a
-          href="https://youtube.com/@og_shubhhh?si=0Lv2iS76OkuBmlRu"
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label="YouTube Channel"
-          className="hidden md:flex items-center justify-center text-white hover:text-[#ff0000] hover:scale-110 transition-all duration-200 cursor-pointer"
-        >
-          <svg
-            className="w-7 h-7 fill-current"
-            viewBox="0 0 24 24"
-            aria-hidden="true"
+        <Magnetic strength={0.35}>
+          <a
+            href="https://youtube.com/@og_shubhhh?si=0Lv2iS76OkuBmlRu"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="YouTube Channel"
+            className="hidden md:flex items-center justify-center text-white hover:text-[#ff0000] transition-colors duration-200 cursor-pointer p-2 rounded-full"
           >
-            <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
-          </svg>
-        </a>
+            <svg
+              className="w-7 h-7 fill-current"
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+            >
+              <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+            </svg>
+          </a>
+        </Magnetic>
 
         {/* Mobile hamburger (visible below md) */}
         <button
@@ -541,79 +562,89 @@ export default function App() {
             }}
           >
             {/* 4 action pill buttons with Black background and White text */}
-            <button
-              type="button"
-              onClick={() => handleNavClick('Pitch us an idea')}
-              className="inline-flex items-center justify-center bg-black text-white border border-white/30 rounded-full text-[13px] sm:text-[15px] px-4 sm:px-5 py-[0.3em] mx-[0.2em] mb-[0.4em] whitespace-nowrap cursor-pointer transition-colors duration-200 hover:bg-white hover:text-black hover:border-white"
-            >
-              Pitch us an idea
-            </button>
+            <Magnetic strength={0.24} className="mx-[0.2em] mb-[0.4em]">
+              <button
+                type="button"
+                onClick={() => handleNavClick('Pitch us an idea')}
+                className="inline-flex items-center justify-center bg-black text-white border border-white/30 rounded-full text-[13px] sm:text-[15px] px-4 sm:px-5 py-[0.3em] whitespace-nowrap cursor-pointer transition-colors duration-200 hover:bg-white hover:text-black hover:border-white"
+              >
+                Pitch us an idea
+              </button>
+            </Magnetic>
 
-            <button
-              type="button"
-              onClick={() => handleNavClick('Come work here')}
-              className="inline-flex items-center justify-center bg-black text-white border border-white/30 rounded-full text-[13px] sm:text-[15px] px-4 sm:px-5 py-[0.3em] mx-[0.2em] mb-[0.4em] whitespace-nowrap cursor-pointer transition-colors duration-200 hover:bg-white hover:text-black hover:border-white"
-            >
-              Come work here
-            </button>
+            <Magnetic strength={0.24} className="mx-[0.2em] mb-[0.4em]">
+              <button
+                type="button"
+                onClick={() => handleNavClick('Come work here')}
+                className="inline-flex items-center justify-center bg-black text-white border border-white/30 rounded-full text-[13px] sm:text-[15px] px-4 sm:px-5 py-[0.3em] whitespace-nowrap cursor-pointer transition-colors duration-200 hover:bg-white hover:text-black hover:border-white"
+              >
+                Come work here
+              </button>
+            </Magnetic>
 
-            <button
-              type="button"
-              onClick={() => handleNavClick('Send a brief hello')}
-              className="inline-flex items-center justify-center bg-black text-white border border-white/30 rounded-full text-[13px] sm:text-[15px] px-4 sm:px-5 py-[0.3em] mx-[0.2em] mb-[0.4em] whitespace-nowrap cursor-pointer transition-colors duration-200 hover:bg-white hover:text-black hover:border-white"
-            >
-              Send a brief hello
-            </button>
+            <Magnetic strength={0.24} className="mx-[0.2em] mb-[0.4em]">
+              <button
+                type="button"
+                onClick={() => handleNavClick('Send a brief hello')}
+                className="inline-flex items-center justify-center bg-black text-white border border-white/30 rounded-full text-[13px] sm:text-[15px] px-4 sm:px-5 py-[0.3em] whitespace-nowrap cursor-pointer transition-colors duration-200 hover:bg-white hover:text-black hover:border-white"
+              >
+                Send a brief hello
+              </button>
+            </Magnetic>
 
-            <button
-              type="button"
-              onClick={() => handleNavClick('See how we operate')}
-              className="inline-flex items-center justify-center bg-black text-white border border-white/30 rounded-full text-[13px] sm:text-[15px] px-4 sm:px-5 py-[0.3em] mx-[0.2em] mb-[0.4em] whitespace-nowrap cursor-pointer transition-colors duration-200 hover:bg-white hover:text-black hover:border-white"
-            >
-              See how we operate
-            </button>
+            <Magnetic strength={0.24} className="mx-[0.2em] mb-[0.4em]">
+              <button
+                type="button"
+                onClick={() => handleNavClick('See how we operate')}
+                className="inline-flex items-center justify-center bg-black text-white border border-white/30 rounded-full text-[13px] sm:text-[15px] px-4 sm:px-5 py-[0.3em] whitespace-nowrap cursor-pointer transition-colors duration-200 hover:bg-white hover:text-black hover:border-white"
+              >
+                See how we operate
+              </button>
+            </Magnetic>
 
             {/* 1 outline transparent pill button */}
-            <button
-              type="button"
-              onClick={handleCopyEmail}
-              className="group inline-flex items-center justify-center text-white bg-transparent border border-white rounded-full text-[13px] sm:text-[15px] px-4 sm:px-5 py-[0.3em] mx-[0.2em] mb-[0.4em] whitespace-nowrap gap-2 sm:gap-3 cursor-pointer transition-colors duration-200 hover:bg-white hover:text-black"
-              title="Copy email to clipboard"
-            >
-              <span>
-                Reach us:{' '}
-                <span className="underline underline-offset-1">
-                  subhamkr1201@gmail.com
-                </span>
-              </span>
-              {/* 12x12 copy icon: inline SVG of two overlapping rectangles */}
-              <svg
-                width="12"
-                height="12"
-                viewBox="0 0 12 12"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-                className="shrink-0"
-                aria-hidden="true"
+            <Magnetic strength={0.24} className="mx-[0.2em] mb-[0.4em]">
+              <button
+                type="button"
+                onClick={handleCopyEmail}
+                className="group inline-flex items-center justify-center text-white bg-transparent border border-white rounded-full text-[13px] sm:text-[15px] px-4 sm:px-5 py-[0.3em] whitespace-nowrap gap-2 sm:gap-3 cursor-pointer transition-colors duration-200 hover:bg-white hover:text-black"
+                title="Copy email to clipboard"
               >
-                <path
-                  d="M4 3V1.5C4 1.22386 4.22386 1 4.5 1H10.5C10.7761 1 11 1.22386 11 1.5V7.5C11 7.77614 10.7761 8 10.5 8H9"
-                  stroke="currentColor"
-                  strokeWidth="1.1"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-                <rect
-                  x="1.5"
-                  y="3.5"
-                  width="7.5"
-                  height="7.5"
-                  rx="0.5"
-                  stroke="currentColor"
-                  strokeWidth="1.1"
-                />
-              </svg>
-            </button>
+                <span>
+                  Reach us:{' '}
+                  <span className="underline underline-offset-1">
+                    subhamkr1201@gmail.com
+                  </span>
+                </span>
+                {/* 12x12 copy icon: inline SVG of two overlapping rectangles */}
+                <svg
+                  width="12"
+                  height="12"
+                  viewBox="0 0 12 12"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="shrink-0"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="M4 3V1.5C4 1.22386 4.22386 1 4.5 1H10.5C10.7761 1 11 1.22386 11 1.5V7.5C11 7.77614 10.7761 8 10.5 8H9"
+                    stroke="currentColor"
+                    strokeWidth="1.1"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                  <rect
+                    x="1.5"
+                    y="3.5"
+                    width="7.5"
+                    height="7.5"
+                    rx="0.5"
+                    stroke="currentColor"
+                    strokeWidth="1.1"
+                  />
+                </svg>
+              </button>
+            </Magnetic>
           </div>
         </div>
       </main>
@@ -642,15 +673,19 @@ export default function App() {
             className="relative w-full max-w-lg bg-[#0e0e10] border border-white/20 rounded-2xl p-6 sm:p-8 text-white shadow-2xl"
             onClick={(e) => e.stopPropagation()}
           >
-            {/* Close button */}
-            <button
-              type="button"
-              onClick={() => setActiveModal(null)}
-              className="absolute top-5 right-5 text-neutral-400 hover:text-white text-xl w-8 h-8 flex items-center justify-center rounded-full hover:bg-white/10 transition-colors"
-              aria-label="Close dialog"
-            >
-              ✕
-            </button>
+            {/* Close button with Magnetic pull */}
+            <div className="absolute top-5 right-5">
+              <Magnetic strength={0.35}>
+                <button
+                  type="button"
+                  onClick={() => setActiveModal(null)}
+                  className="text-neutral-400 hover:text-white text-xl w-8 h-8 flex items-center justify-center rounded-full hover:bg-white/10 transition-colors"
+                  aria-label="Close dialog"
+                >
+                  ✕
+                </button>
+              </Magnetic>
+            </div>
 
             {/* Modal Header */}
             <div className="flex items-center gap-2 mb-2 text-xs uppercase tracking-widest text-neutral-400 font-mono">
